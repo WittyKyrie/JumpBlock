@@ -1,40 +1,29 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 
-public class LevelGenerator
+public class LevelGenerator : Singleton<LevelGenerator>
 {
-    private GameObject _basicNode;
+    public AssetReferenceGameObject basicNode;
     private GameObject _activeBlock;
     private GameObject _sleepyBlock;
     private GameObject _targetPlace;
+    public AssetReferenceT<TextAsset> levelConfig;
 
-    public static void LoadAsset()
+    private void Start()
     {
-        
+        var test = levelConfig.LoadAssetAsync<TextAsset>();
+        var test1 = JsonUtility.FromJson<Level>(test.Task.Result.text);
+        GenerateLevel(test1);
     }
-    
-    public static void GenerateLevel(List<Vector2Int> basicNode, List<Vector2Int> activeBlock, 
-        List<Vector2Int> sleepyBlock, List<Vector2Int> targetPlace)
+
+    public void GenerateLevel(Level level)
     {
-        foreach (var vector2Int in basicNode)
+        var map = Instantiate(new GameObject("Map"));
+        
+        foreach (var vector2Int in level.basicNodeList)
         {
-            
-        }
-
-        foreach (var vector2Int in activeBlock)
-        {
-            
-        }
-
-        foreach (var vector2Int in sleepyBlock)
-        {
-            
-        }
-
-        foreach (var vector2Int in targetPlace)
-        {
-            
+            var node = basicNode.InstantiateAsync(map.transform);
         }
     }
 }
