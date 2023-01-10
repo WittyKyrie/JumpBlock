@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceProviders;
 
 public class LevelGenerator : Singleton<LevelGenerator>
 {
@@ -8,12 +7,12 @@ public class LevelGenerator : Singleton<LevelGenerator>
     private GameObject _activeBlock;
     private GameObject _sleepyBlock;
     private GameObject _targetPlace;
-    public AssetReferenceT<TextAsset> levelConfig;
+    public TextAsset levelConfig;
 
     private void Start()
     {
-        var test = levelConfig.LoadAssetAsync<TextAsset>();
-        var test1 = JsonUtility.FromJson<Level>(test.Task.Result.text);
+        basicNode.LoadAssetAsync();
+        var test1 = JsonUtility.FromJson<Level>(levelConfig.text);
         GenerateLevel(test1);
     }
 
@@ -23,7 +22,11 @@ public class LevelGenerator : Singleton<LevelGenerator>
         
         foreach (var vector2Int in level.basicNodeList)
         {
-            var node = basicNode.InstantiateAsync(map.transform);
+            if (basicNode.Asset != null)
+            {
+                var node = Instantiate(basicNode.Asset, map.transform) as GameObject;
+                node.transform.position = new Vector3(vector2Int.x, 0.1f, vector2Int.y) * 2;
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Level
 {
     public List<Vector2Int> basicNodeList = new List<Vector2Int>();
