@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -7,26 +9,29 @@ public class LevelGenerator : Singleton<LevelGenerator>
     private GameObject _activeBlock;
     private GameObject _sleepyBlock;
     private GameObject _targetPlace;
-    public TextAsset levelConfig;
+    public AssetReference levelConfig;
 
-    private void Start()
+    private Dictionary<int, Level> _levels = new Dictionary<int, Level>();
+
+    private IEnumerator Start()
     {
-        basicNode.LoadAssetAsync();
-        var test1 = JsonUtility.FromJson<Level>(levelConfig.text);
-        GenerateLevel(test1);
+        yield return basicNode.LoadAssetAsync().Task;
+        var levelJson = levelConfig.LoadAssetAsync<TextAsset>().WaitForCompletion();
+
+        var level = JsonUtility.FromJson<Level>(levelJson.text);
+        _levels.Add(level.key, level);
+        
+        GenerateLevel(1);
     }
 
-    public void GenerateLevel(Level level)
+    public void GenerateLevel(int level)
     {
         var map = Instantiate(new GameObject("Map"));
         
-        foreach (var vector2Int in level.basicNodeList)
+        foreach (var vector2Int in _levels[level].basicNodeList)
         {
-            if (basicNode.Asset != null)
-            {
-                var node = Instantiate(basicNode.Asset, map.transform) as GameObject;
-                node.transform.position = new Vector3(vector2Int.x, 0.1f, vector2Int.y) * 2;
-            }
+            var pos = new Vector3(vector2Int.y, 0.1f, vector2Int.x) * 2;
+            var node = Instantiate(basicNode.Asset, pos, Quaternion.identity, map.transform) as GameObject;
         }
     }
 }

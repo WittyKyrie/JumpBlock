@@ -157,7 +157,11 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  levelConfig: {fileID: 4900000, guid: 7ca37d2d6696b8c4f9bb42a77c623787, type: 3}
+  levelConfig:
+    m_AssetGUID: 7ca37d2d6696b8c4f9bb42a77c623787
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
 --- !u!4 &227031234
 Transform:
   m_ObjectHideFlags: 0

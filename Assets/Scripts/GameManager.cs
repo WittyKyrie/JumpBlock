@@ -6,7 +6,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        ChangeGameState(GameState.GenerateLevel);
+        ChangeGameState(GameState.LoadingAsset);
     }
 
     private void ChangeGameState(GameState newGameState){
@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
         switch(newGameState){
             case GameState.GenerateLevel:
                 break;
-            case GameState.GenerateBlock:
+            case GameState.LoadingAsset:
                 break;
             case GameState.WaitingInput:
                 break;
@@ -51,8 +51,8 @@ public class GameManager : Singleton<GameManager>
 //游戏状态
 public enum GameState
 {
+    LoadingAsset,
     GenerateLevel,
-    GenerateBlock,
     WaitingInput,
     Moving,
     Judgment,
