@@ -1,21 +1,25 @@
+using System;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     private GameState _state;
+    // public static event Action<GameState> OnGameStateChanged;
 
     private void Start()
     {
         ChangeGameState(GameState.LoadingAsset);
     }
 
-    private void ChangeGameState(GameState newGameState){
+    public void ChangeGameState(GameState newGameState){
         _state = newGameState;
 
         switch(newGameState){
             case GameState.GenerateLevel:
+                LevelGenerator.Instance.GenerateLevel(1);
                 break;
             case GameState.LoadingAsset:
+                LevelGenerator.Instance.PrepareLevelAsset();
                 break;
             case GameState.WaitingInput:
                 break;

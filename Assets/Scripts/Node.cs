@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    public bool isSleepyBlockHere;
-    public bool isObstacleHere;
+    private bool _isSleepyBlockHere;
+    private bool _isObstacleHere;
     public Vector2 Pos => transform.position;
 }

@@ -21,8 +21,12 @@ MonoBehaviour:
     m_Address: Assets/Config/LevelConfig.json
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f729c9b94ca460a428d4f2e65d501086
-    m_Address: Assets/Prefab/Node/BasicNode.fbx
+  - m_GUID: 8bc01e79ab18538419572a01f549882d
+    m_Address: Assets/Prefab/Node/BasicNode.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 71cd7629fe0e69c46b93f6fdc33c1f73
+    m_Address: Assets/Prefab/Node/Block.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
