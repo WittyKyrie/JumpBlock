@@ -37,13 +37,13 @@ public class LevelGenerator : Singleton<LevelGenerator>
         
         foreach (var vector2Int in _levels[level].basicNodeList)
         {
-            var pos = new Vector3(vector2Int.y, 0.1f, vector2Int.x) * 2;
+            var pos = new Vector3(vector2Int.x, 0.1f, vector2Int.y) * 2;
             Instantiate(basicNode.Asset, pos, Quaternion.identity, map.transform);
         }
 
         foreach (var vector2Int in _levels[level].activeBlockList)
         {
-            var pos = new Vector3(vector2Int.y, 0.5f, vector2Int.x) * 2;
+            var pos = new Vector3(vector2Int.x, 0.5f, vector2Int.y) * 2;
             Instantiate(block.Asset, pos, Quaternion.identity, map.transform);
         }
     }
