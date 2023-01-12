@@ -15,11 +15,11 @@ public class GameManager : Singleton<GameManager>
         _state = newGameState;
 
         switch(newGameState){
-            case GameState.GenerateLevel:
-                LevelGenerator.Instance.GenerateLevel(1);
-                break;
             case GameState.LoadingAsset:
                 LevelGenerator.Instance.PrepareLevelAsset();
+                break;
+            case GameState.GenerateLevel:
+                LevelGenerator.Instance.GenerateLevel(1);
                 break;
             case GameState.WaitingInput:
                 break;
