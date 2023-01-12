@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -11,9 +11,11 @@ public class LevelGenerator : Singleton<LevelGenerator>
     private GameObject _targetPlace;
     public AssetReference levelConfig;
 
-    private Dictionary<int, Level> _levels = new Dictionary<int, Level>();
+    private Dictionary<int, Level> _levels;
     private int _assetLoadCount = 2;
     private bool _levelIsReady;
+
+    private List<Node> _nodes;
 
     public void PrepareLevelAsset()
     {
@@ -21,7 +23,7 @@ public class LevelGenerator : Singleton<LevelGenerator>
         block.LoadAssetAsync().Completed += OnShapeLoaded;
         var levelJson = levelConfig.LoadAssetAsync<TextAsset>().WaitForCompletion();
         var level = JsonUtility.FromJson<Level>(levelJson.text);
-        _levels.Add(level.key, level);
+        _levels = new Dictionary<int, Level> {{level.key, level}};
     }
     
     private void OnShapeLoaded(AsyncOperationHandle<GameObject> obj)
@@ -33,18 +35,25 @@ public class LevelGenerator : Singleton<LevelGenerator>
 
     public void GenerateLevel(int level)
     {
+        _nodes = new List<Node>();
         var map = Instantiate(new GameObject("Map"));
         
         foreach (var vector2Int in _levels[level].basicNodeList)
         {
-            var pos = new Vector3(vector2Int.x, 0.1f, vector2Int.y) * 2;
-            Instantiate(basicNode.Asset, pos, Quaternion.identity, map.transform);
+            var pos = new Vector3(vector2Int.x, 0, vector2Int.y);
+            var node = Instantiate(basicNode.Asset, pos, Quaternion.identity, map.transform) as Node;
+            _nodes.Add(node);
         }
 
         foreach (var vector2Int in _levels[level].activeBlockList)
         {
-            var pos = new Vector3(vector2Int.x, 0.5f, vector2Int.y) * 2;
+            var pos = new Vector3(vector2Int.x, 0, vector2Int.y);
             Instantiate(block.Asset, pos, Quaternion.identity, map.transform);
         }
+    }
+
+    public Node GetNodeAtPosition(Vector2Int pos)
+    {
+        return _nodes.FirstOrDefault(n => n.Pos == pos);
     }
 }
