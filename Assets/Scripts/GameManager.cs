@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -33,21 +32,6 @@ public class GameManager : Singleton<GameManager>
             default:
                 return;           
         }
-    }
-    
-    private void Update()
-    {
-        if(_state != GameState.WaitingInput) return;
-
-        if(Input.GetKeyDown(KeyCode.A)) Shift(Vector2.left);
-        if(Input.GetKeyDown(KeyCode.D)) Shift(Vector2.right);
-        if(Input.GetKeyDown(KeyCode.W)) Shift(Vector2.up);
-        if(Input.GetKeyDown(KeyCode.S)) Shift(Vector2.down);
-    }
-
-    private void Shift(Vector2 left)
-    {
-        throw new System.NotImplementedException(left.ToString());
     }
 }
 

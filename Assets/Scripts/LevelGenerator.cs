@@ -35,20 +35,21 @@ public class LevelGenerator : Singleton<LevelGenerator>
 
     public void GenerateLevel(int level)
     {
-        _nodes = new List<Node>();
         var map = Instantiate(new GameObject("Map"));
+        var blocks = Instantiate(new GameObject("Block"));
         
         foreach (var vector2Int in _levels[level].basicNodeList)
         {
             var pos = new Vector3(vector2Int.x, 0, vector2Int.y);
             var node = Instantiate(basicNode.Asset, pos, Quaternion.identity, map.transform) as Node;
-            _nodes.Add(node);
+            if(node != null) _nodes.Add(node);
+
         }
 
         foreach (var vector2Int in _levels[level].activeBlockList)
         {
             var pos = new Vector3(vector2Int.x, 0, vector2Int.y);
-            Instantiate(block.Asset, pos, Quaternion.identity, map.transform);
+            Instantiate(block.Asset, pos, Quaternion.identity, blocks.transform);
         }
     }
 
