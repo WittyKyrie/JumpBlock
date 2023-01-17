@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-public abstract class InputManager : Singleton<InputManager>
+public class InputManager : Singleton<InputManager>
 {
     private bool _isWaitingInput;
 
@@ -23,6 +22,10 @@ public abstract class InputManager : Singleton<InputManager>
 
     private void BlockMove(Vector2Int dir)
     {
-        
+        GameManager.Instance.ChangeGameState(GameState.Moving);
+        foreach (var block in LevelGenerator.Instance.blocks)
+        {
+            block.CheckDirCanMove(dir);
+        }
     }
 }

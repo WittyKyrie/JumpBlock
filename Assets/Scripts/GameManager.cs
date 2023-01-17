@@ -21,8 +21,10 @@ public class GameManager : Singleton<GameManager>
                 LevelGenerator.Instance.GenerateLevel(1);
                 break;
             case GameState.WaitingInput:
+                InputManager.Instance.IsWaitingInput = true;
                 break;
             case GameState.Moving:
+                InputManager.Instance.IsWaitingInput = false;
                 break;
             case GameState.Judgment:
                 break; 
